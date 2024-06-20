@@ -12,13 +12,16 @@ import { Typography } from "antd";
 const HomePageUser = () => {
     const [query, setQuery] = useState<any>({
         page: 1,
-        limit: 8,
+        limit: 12,
     });
 
     const { data } = useGetListProductPaginateQuery(query as any);
 
     return (
-        <div className="">
+        <div
+            className=""
+            id="main"
+        >
             <div className="banner">
                 <img
                     src={banner}

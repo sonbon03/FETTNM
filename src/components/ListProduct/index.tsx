@@ -7,6 +7,7 @@ import images1 from "../../assets/images/pngegg.png";
 import { TOAST_CREATE_ERROR, TOAST_CREATE_SUCCESS } from "../../consts";
 import { useCart } from "../../Context/CartContext";
 import { useToast } from "../toast/ToastProvider";
+import { useCheckAdmin } from "../../hook/useCheckAdmin";
 
 interface ListProductProp {
     data: any;
@@ -17,6 +18,7 @@ const ListProduct = (props: ListProductProp) => {
     const { setCartData } = useCart();
     const navigation = useNavigate();
     const { showToast } = useToast();
+    const { isAdmin } = useCheckAdmin();
 
     const WrapCard = styled(Card)`
         .ant-card-body {
@@ -34,7 +36,8 @@ const ListProduct = (props: ListProductProp) => {
     `;
 
     const handleDetail = (id: string) => {
-        navigation(`/detail-product/${id}`);
+        const url = isAdmin ? `/admin/detail-product/${id}` : `/detail-product/${id}`;
+        navigation(url);
     };
     const handleAddCart = (value: any) => {
         const dataCart = {
@@ -80,17 +83,19 @@ const ListProduct = (props: ListProductProp) => {
                         return (
                             <li>
                                 <WrapCard
-                                    className="cursor-pointer img-product"
+                                    className="cursor-pointer img-product bg-transparent border-0"
                                     style={{ width: 290 }}
                                     cover={
                                         <img
-                                            className="img-fluid"
-                                            alt="example"
+                                            alt="img-prouduct"
                                             src={images1}
                                         />
                                     }
                                 >
-                                    <Card.Meta title={item.tensanpham} />
+                                    <div className="my-3 d-grid gap-2">
+                                        <Card.Meta title={item.tensanpham} />
+                                        <Card.Meta title={`Giá: ${item.giaban.toLocaleString("vi-VN")}đ`} />
+                                    </div>
                                     <div className="show-action-product gap-2">
                                         <Button
                                             className="rounded-5"

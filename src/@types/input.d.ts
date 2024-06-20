@@ -349,3 +349,13 @@ interface InputCreateReview {
     rating: number;
     tags?: Array<string>;
 }
+
+interface DataType {
+    idAccount: string;
+    idProduct: string;
+    idCart: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+}

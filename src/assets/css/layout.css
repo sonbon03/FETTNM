@@ -2,19 +2,29 @@
  * Including variables, classes, fonts will be formatted common to the website.
  */
 
+
 @font-face {
-    font-family: "GoogleSans";
-    src: url('../fonts/GoogleSans.ttf') format('truetype');
+    font-family: "InterRegular";
+    src: url('../fonts/Inter/static/Inter-Regular.ttf');
+    font-weight: 400;
 }
 
 @font-face {
-    font-family: "GoogleSans_B";
-    src: url('../fonts/GoogleSans_B.ttf') format('truetype');
+    font-family: "InterMedium";
+    src: url('../fonts/Inter/static/Inter-Medium.ttf');
+    font-weight: 500;
 }
 
 @font-face {
-    font-family: "Montserrat_B";
-    src: url('../fonts/Montserrat_B.ttf') format('truetype');
+    font-family: "InterSemiBold";
+    src: url('../fonts/Inter/static/Inter-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "InterBold";
+    src: url('../fonts/Inter/static/Inter-Bold.ttf');
+    font-weight: 700;
 }
 
 :root {
@@ -46,6 +56,11 @@
     --font: "GoogleSans", Roboto, Arial, sans-serif;
     --font_b: "GoogleSans_B", Roboto, Arial, sans-serif;
     --font_spec: "Montserrat_B", Roboto, Arial, sans-serif;
+
+    --interRegular: "InterRegular", Roboto, Arial, sans-serif;
+    --interMedium: "InterMedium", Roboto, Arial, sans-serif;
+    --interSemiBold: "InterSemiBold", Roboto, Arial, sans-serif;
+    --interBold: "InterBold", Roboto, Arial, sans-serif;
 }
 
 html {
@@ -99,23 +114,23 @@ h6 {
     margin: 0;
     font-weight: normal;
     line-height: 1.25;
-    font-family: var(--font_b);
+    /* font-family: var(--font_b); */
     color: var(--title);
 }
 
 h1,
 h2 {
-    font-family: var(--font_spec);
+    /* font-family: var(--font_spec); */
 }
 
 b,
 strong {
-    font-family: var(--font_b);
+    /* font-family: var(--font_b); */
     font-weight: normal;
 }
 
 body {
-    font-family: var(--font);
+    font-family: var(--interRegular) !important;
     font-size: 13px;
     color: var(--text);
     background-color: var(--light);
@@ -125,7 +140,7 @@ body {
 p {
     line-height: 1.85;
     margin-bottom: 0;
-    font-family: var(--font);
+    /* font-family: var(--font); */
 }
 
 
@@ -165,7 +180,7 @@ p {
     display: none;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -185%);
 }
 
 .show-action-product img {
@@ -196,15 +211,23 @@ p {
 }
 
 .line-style {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
     border-bottom: 2px solid;
+    border-color: #7EE65A;
 }
 
 :where(.css-dev-only-do-not-override-1r287do).ant-input-outlined:focus {
     border-color: black;
 }
 
+.color-linear-button {
+    background: linear-gradient(90deg, #D9D9D9 0%, #97AB90 62%);
+}
+
 .color-linear {
-    background: linear-gradient(0deg, #D8C3A5 0%, #F8F8F8 100%);
+    background: linear-gradient(90deg, #D8C3A5 0%, #F8F8F8 100%);
 }
 
 .color-button {
@@ -219,6 +242,33 @@ p {
     background-color: #FFF4EC;
 }
 
+.dashed-border-important {
+    border-style: dashed !important;
+}
+
+#main {
+    background-image: url("../images//backgroud_main.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.color-red {
+    color: #FF0000;
+}
+
+.color-form-comment {
+    background-color: #F7F7F7;
+}
+
+
+.color-gray {
+    background-color: #D9D9D9;
+}
+
+.color-btn-pay {
+    background: linear-gradient(90deg, #D8C3A5 50%, #D8C3A5 50%);
+}
 
 /* end */
 
@@ -2132,7 +2182,7 @@ table tr td .btn-group i {
 
 .active>.page-link,
 .page-link.active {
-    background: var(--blue);
+    background: #D8C3A5;
     color: var(--white);
     border: 0;
 }

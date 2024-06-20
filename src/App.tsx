@@ -1,20 +1,20 @@
-import React from "react";
-import "../src/assets/css/vendor.min.css";
+// import "../src/assets/css/vendor.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/assets/css/layout.css";
 import "../src/assets/css/media-screen.css";
 
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import Layout from "./layouts";
-import HomePageUser from "./pages/HomePageUser";
-import ProductPage from "./pages/ProductPage";
-import FormManagementProduct from "./pages/FormManagementProduct";
+import DetailHistory from "./pages/DetailHistory";
 import DetailProduct from "./pages/DetailProduct";
+import FormManagementProduct from "./pages/FormManagementProduct";
+import HistoryPay from "./pages/HistoryPay";
+import HomePageUser from "./pages/HomePageUser";
 import ManagementProduct from "./pages/ManagementProduct";
 import Payment from "./pages/Payment";
+import ProductPage from "./pages/ProductPage";
 import ThankPage from "./pages/ThankPage";
-import HistoryPay from "./pages/HistoryPay";
-import DetailHistory from "./pages/DetailHistory";
 
 function App() {
     return (
@@ -73,7 +73,7 @@ function App() {
                         element={<HistoryPay />}
                     />
                     <Route
-                        path="/detail-history-pay"
+                        path="/detail-history-pay/:id"
                         element={<DetailHistory />}
                     />
                     <Route
