@@ -32,7 +32,10 @@ const ProductPage = () => {
         !isAdmin ? setLinkBack("/") : setLinkBack("/admin");
     }, [isAdmin]);
     return (
-        <div className="">
+        <div
+            className=""
+            id="main"
+        >
             <div className="position-relative">
                 <ul className="position-absolute back-link">
                     <li>

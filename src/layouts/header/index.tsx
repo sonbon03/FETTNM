@@ -1,6 +1,6 @@
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Badge, Button, Dropdown, Menu, MenuProps, Space, Table, TableColumnsType } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import iconCart from "../../assets/images/iconCart.svg";
 import iconClose from "../../assets/images/iconClose.svg";
@@ -11,23 +11,14 @@ import { useCart } from "../../Context/CartContext";
 import { useCheckAdmin } from "../../hook/useCheckAdmin";
 import { useGetListProductQuery, useGetTypeProductQuery } from "../../redux/queries/admin/admin.product";
 import { locale } from "../../utils/common";
+import { DataContext } from "../../Context/InfoProductContext";
 
-interface DataType {
-    idAccount: string;
-    idProduct: string;
-    idCart: string;
-    name: string;
-    price: number;
-    quantity: number;
-    image: string;
-}
-
-interface HeaderProp {
-    setTotalSelectedItems: (data: any) => void;
-}
+interface HeaderProp {}
 
 const Header = (props: HeaderProp) => {
     const { cartData, setCartData } = useCart();
+
+    const { setTotalSelectedItems } = useContext(DataContext);
 
     const { data: dataTypeProducts } = useGetTypeProductQuery();
     const { data: dataProduct } = useGetListProductQuery();
@@ -52,7 +43,7 @@ const Header = (props: HeaderProp) => {
         onChange: onSelectChange,
     };
 
-    const totalSelectedItems: DataType[] = selectedRows.map((row, index) => {
+    const totalSelectedItems: DataType[] = selectedRows.map((row) => {
         return {
             idAccount: row.idAccount,
             idProduct: row.idProduct,
@@ -65,7 +56,7 @@ const Header = (props: HeaderProp) => {
     });
 
     const handleClick = () => {
-        props.setTotalSelectedItems(totalSelectedItems);
+        setTotalSelectedItems(totalSelectedItems);
         setSelectedRowKeys([]);
         setSelectedRows([]);
         navigation("/payment");
@@ -113,9 +104,9 @@ const Header = (props: HeaderProp) => {
             render: (image: any) => {
                 return (
                     <img
-                        className="img-fluid"
                         src={process.env.REACT_APP_CDN + image}
                         alt=""
+                        width={100}
                     />
                 );
             },
@@ -131,7 +122,7 @@ const Header = (props: HeaderProp) => {
             title: "Giá",
             dataIndex: "price",
             render: (price: any) => {
-                return <div className="">{price}</div>;
+                return <div className="">{price.toLocaleString("vi-VN")}</div>;
             },
         },
         {
@@ -240,14 +231,18 @@ const Header = (props: HeaderProp) => {
                     className="d-flex gap-4 justify-content-between align-items-center"
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <span>
-                        Giá tiền:{" "}
-                        {selectedRowKeys.length > 0
-                            ? totalSelectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-                            : 0}
-                    </span>
+                    <div className="fw-semibold d-flex gap-3">
+                        Giá tiền:
+                        <span>
+                            {(selectedRowKeys.length > 0
+                                ? totalSelectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+                                : 0
+                            ).toLocaleString("vi-VN")}
+                        </span>
+                    </div>
                     <Button
                         onClick={handleClick}
+                        className="color-btn-pay fw-semibold"
                         disabled={selectedRowKeys.length === 0}
                     >
                         Thanh toán
@@ -265,7 +260,7 @@ const Header = (props: HeaderProp) => {
     return (
         <header>
             <div className="containe">
-                <nav className="navbar navbar-expand-lg bg-body-tertiary position-fixed w-100 text-white top-0 end-0 bg-navigation">
+                <nav className="navbar navbar-expand-lg bg-body-tertiary position-fixed w-100 text-white top-0 end-0 bg-navigation color-linear">
                     <div className="container">
                         <Link
                             className="navbar-brand text-white"
@@ -292,10 +287,10 @@ const Header = (props: HeaderProp) => {
                             className="collapse navbar-collapse "
                             id="navbarSupportedContent"
                         >
-                            <ul className="navbar-nav m-auto mb-2 mb-lg-0 gap-5">
+                            <ul className="navbar-nav m-auto mb-2 mb-lg-0 gap-5 text-black">
                                 <li className="nav-item">
                                     <Link
-                                        className="nav-link active text-white"
+                                        className="nav-link active "
                                         aria-current="page"
                                         to={isAdmin ? "/admin" : "/"}
                                     >
@@ -304,7 +299,7 @@ const Header = (props: HeaderProp) => {
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className="nav-link  text-white"
+                                        className="nav-link  "
                                         to="#"
                                     >
                                         Giới thiệu
@@ -325,7 +320,7 @@ const Header = (props: HeaderProp) => {
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className="nav-link text-white"
+                                        className="nav-link"
                                         to={""}
                                     >
                                         Tin tức

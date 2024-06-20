@@ -6,7 +6,7 @@ import iconLocation from "../../assets/images/iconLocation.svg";
 import imgQr from "../../assets/images/qr.png";
 import { useToast } from "../../components/toast/ToastProvider";
 import { TOAST_CREATE_ERROR, TOAST_CREATE_SUCCESS } from "../../consts";
-import { DataContext } from "../../Context";
+import { DataContext } from "../../Context/InfoProductContext";
 import { useCart } from "../../Context/CartContext";
 import { useCreateOrderMutation } from "../../redux/queries/user/user.order";
 import { formatDateString, locale } from "../../utils/common";
@@ -18,16 +18,15 @@ const Payment = () => {
     const { cartData, setCartData } = useCart();
 
     const [openModal, setOpenModal] = useState(false);
-    const [disPay, setDisPay] = useState(true);
     const [pendingValues, setPendingValues] = useState<any>(null);
 
     const navigation = useNavigate();
 
-    const dataContext = useContext(DataContext);
-
     const { showToast } = useToast();
 
-    const { totalSelectedItems } = dataContext;
+    const { totalSelectedItem } = useContext(DataContext);
+
+    console.log(totalSelectedItem);
 
     const [dateShip, setDateShip] = useState(new Date());
     const [totalMoney, setTotalMoney] = useState(0);
@@ -65,7 +64,7 @@ const Payment = () => {
             ...values,
             id_taikhoan: "d4aa9ee2-19ae-11ef-a5b7-acde48001122",
             idShip: "5f9bd1ea-1cd6-11ef-8dc1-acde48001122",
-            product: totalSelectedItems,
+            product: totalSelectedItem,
             total: totalMoney,
             dateShip: dateShip,
         };
@@ -78,7 +77,7 @@ const Payment = () => {
             showToast({ ...TOAST_CREATE_SUCCESS });
             const updateCart = cartData.filter(
                 (item: any) =>
-                    !totalSelectedItems?.some((selectedItem: any) => selectedItem.idProduct === item.idProduct)
+                    !totalSelectedItem?.some((selectedItem: any) => selectedItem.idProduct === item.idProduct)
             );
             setCartData(updateCart);
             sessionStorage.setItem("cart", JSON.stringify(updateCart));
@@ -108,20 +107,20 @@ const Payment = () => {
     }, []);
 
     useEffect(() => {
-        if (totalSelectedItems.length === 0) {
+        if (totalSelectedItem.length === 0) {
             navigation("/");
         }
-    }, [totalSelectedItems]);
+    }, [totalSelectedItem]);
 
     useEffect(() => {
-        if (totalSelectedItems && totalSelectedItems.length > 0) {
-            let newTotal = totalSelectedItems.reduce((acc, item: any) => {
+        if (totalSelectedItem && totalSelectedItem.length > 0) {
+            let newTotal = totalSelectedItem.reduce((acc, item: any) => {
                 return acc + item.price * item.quantity;
             }, 0);
             setProductMoney(newTotal);
             setTotalMoney(newTotal + 12800);
         }
-    }, [totalSelectedItems]);
+    }, [totalSelectedItem]);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -164,7 +163,7 @@ const Payment = () => {
                         >
                             <div className="">
                                 <div className="form-group">
-                                    <div className="form-floating py-3 px-4 border">
+                                    <div className="form-floating py-3 px-4 border border-2 rounded-4">
                                         <Row
                                             gutter={20}
                                             className="mt-3"
@@ -317,7 +316,7 @@ const Payment = () => {
                                                 </div>
                                             </Col>
                                         </Row>
-                                        <label className="d-flex gap-2">
+                                        <label className="d-flex gap-2 ms-5">
                                             <img
                                                 src={iconLocation}
                                                 alt=""
@@ -327,16 +326,16 @@ const Payment = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="table-responsive">
+                            <div className="table-responsive form-group">
                                 <Table
                                     columns={columns}
-                                    rowKey="id"
-                                    dataSource={totalSelectedItems as any}
+                                    rowKey="idProduct"
+                                    dataSource={totalSelectedItem as any}
                                     pagination={false}
                                     locale={locale}
                                 />
                             </div>
-                            <div className="py-3 px-4 border">
+                            <div className="py-3 px-4 border border-2  form-group rounded-4">
                                 <Row gutter={20}>
                                     <Col span={3}>Đơn vị vận chuyển :</Col>
                                     <Col span={18}>
@@ -391,24 +390,26 @@ const Payment = () => {
                                         </Row>
                                     </Col>
                                     <Col span={4}>
-                                        <Row>
-                                            <Col
-                                                span={16}
-                                                className="text-start d-grid gap-3"
-                                            >
-                                                <div className="">Tổng tiền hàng:</div>
-                                                <div className="">Phí vận chuyển:</div>
-                                                <div className="">Tổng thanh toán:</div>
-                                            </Col>
-                                            <Col
-                                                span={8}
-                                                className="text-end d-grid gap-3"
-                                            >
-                                                <div className="">{productMoney.toLocaleString("vi-VN")}</div>
-                                                <div className="">12.800</div>
-                                                <div className="">{totalMoney.toLocaleString("vi-VN")}</div>
-                                            </Col>
-                                        </Row>
+                                        <div className="form-group">
+                                            <Row>
+                                                <Col
+                                                    span={16}
+                                                    className="text-start d-grid gap-3 "
+                                                >
+                                                    <div className="">Tổng tiền hàng:</div>
+                                                    <div className="">Phí vận chuyển:</div>
+                                                    <div className="">Tổng thanh toán:</div>
+                                                </Col>
+                                                <Col
+                                                    span={8}
+                                                    className="text-end d-grid gap-3"
+                                                >
+                                                    <div className="">{productMoney.toLocaleString("vi-VN")}</div>
+                                                    <div className="">12.800</div>
+                                                    <div className="">{totalMoney.toLocaleString("vi-VN")}</div>
+                                                </Col>
+                                            </Row>
+                                        </div>
                                         <div className="form-group">
                                             <div className="form-floating float-end">
                                                 <Button

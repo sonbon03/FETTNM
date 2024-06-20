@@ -6,6 +6,7 @@ import store, { wrapperPersistStore } from "../src/redux/store";
 import App from "./App";
 import { ToastProvider } from "./components/toast/ToastProvider";
 import { CartProvider } from "./Context/CartContext";
+import { DataProvider } from "./Context/InfoProductContext";
 
 ReactDOM.render(
     <Provider store={store}>
@@ -14,11 +15,13 @@ ReactDOM.render(
             persistor={wrapperPersistStore}
         >
             <CartProvider>
-                <BrowserRouter>
-                    <ToastProvider>
-                        <App />
-                    </ToastProvider>
-                </BrowserRouter>
+                <DataProvider>
+                    <BrowserRouter>
+                        <ToastProvider>
+                            <App />
+                        </ToastProvider>
+                    </BrowserRouter>
+                </DataProvider>
             </CartProvider>
         </PersistGate>
     </Provider>,

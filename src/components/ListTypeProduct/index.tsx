@@ -30,7 +30,7 @@ const ListTypeProduct = () => {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background-color: #ffffffb0;
+            background-color: #ffffff5c;
         }
     `;
 
@@ -62,7 +62,6 @@ const ListTypeProduct = () => {
                 <img
                     src={arrowLeft}
                     alt="prev"
-                    className="img-fluid"
                 />
             </button>
             {data && data.length > 0 ? (
@@ -82,7 +81,7 @@ const ListTypeProduct = () => {
                                     <img
                                         alt="example"
                                         height={350}
-                                        className="object-fit-cover img-fluid"
+                                        className="object-fit-cover"
                                         src={link}
                                     />
                                 }
@@ -98,7 +97,12 @@ const ListTypeProduct = () => {
                                                     : `/product-list-type/${item.id}`
                                             }
                                         >
-                                            <Typography.Title level={3}>Xem thêm</Typography.Title>
+                                            <Typography.Title
+                                                level={3}
+                                                className="text-white"
+                                            >
+                                                Xem thêm
+                                            </Typography.Title>
                                         </Link>
                                     }
                                 />
@@ -119,7 +123,6 @@ const ListTypeProduct = () => {
                 <img
                     src={arrowRight}
                     alt="next"
-                    className="img-fluid"
                 />
             </button>
         </div>

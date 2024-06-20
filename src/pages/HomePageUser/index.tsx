@@ -1,3 +1,4 @@
+import { Typography } from "antd";
 import { memo, useState } from "react";
 import banner from "../../assets/images/banner01.webp";
 import chatluong from "../../assets/images/chatluong.svg";
@@ -7,19 +8,19 @@ import ListProduct from "../../components/ListProduct";
 import ListTypeProduct from "../../components/ListTypeProduct";
 import { Pagination } from "../../components/pagination";
 import { useGetListProductPaginateQuery } from "../../redux/queries/admin/admin.product";
-import { Typography } from "antd";
-import Footer from "../../layouts/footer";
-
 const HomePageUser = () => {
     const [query, setQuery] = useState<any>({
         page: 1,
-        limit: 8,
+        limit: 12,
     });
 
     const { data } = useGetListProductPaginateQuery(query as any);
 
     return (
-        <div className="">
+        <div
+            className=""
+            id="main"
+        >
             <div className="banner">
                 <img
                     src={banner}
@@ -74,7 +75,6 @@ const HomePageUser = () => {
                     defaultCurrentPage={query.page}
                 />
             </div>
-            <Footer/>
         </div>
     );
 };

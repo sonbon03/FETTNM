@@ -94,10 +94,11 @@ const FormComment = (props: Props) => {
                             />
                         </Form.Item>
 
-                        <div className="float-end d-flex gap-3">
+                        <div className="float-end d-flex gap-3 mt-3">
                             {props.data && (
                                 <Button
                                     type="primary"
+                                    className="px-5 rounded-4 color-linear-button"
                                     onClick={() => props.setOpen && props.setOpen()}
                                 >
                                     Hủy
@@ -106,6 +107,7 @@ const FormComment = (props: Props) => {
                             <Button
                                 type="primary"
                                 htmlType="submit"
+                                className="px-5 rounded-4 color-linear-button"
                             >
                                 Gửi
                             </Button>

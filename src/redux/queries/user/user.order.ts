@@ -11,9 +11,9 @@ export const userOrder = createApi({
     baseQuery: customFetchBase,
     endpoints(builder) {
         return {
-            getListOrder: builder.query<Array<IOrder>, void>({
-                query: () => ({
-                    url: `${BASE}/list`,
+            getListOrder: builder.query<Array<IOrder>, { idAccount: string }>({
+                query: ({ idAccount }) => ({
+                    url: `${BASE}/list/${idAccount}`,
                     method: "GET",
                 }),
                 transformErrorResponse(response, meta, arg) {
@@ -30,7 +30,7 @@ export const userOrder = createApi({
                     }
                 },
             }),
-            getByIdOrder: builder.query<IOrder, { id: string }>({
+            getByIdOrder: builder.query<any, { id: string }>({
                 query: ({ id }) => ({
                     url: `${BASE}/detail/${id}`,
                     method: "GET",
