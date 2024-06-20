@@ -8,6 +8,7 @@ import ListTypeProduct from "../../components/ListTypeProduct";
 import { Pagination } from "../../components/pagination";
 import { useGetListProductPaginateQuery } from "../../redux/queries/admin/admin.product";
 import { Typography } from "antd";
+import Footer from "../../layouts/footer";
 
 const HomePageUser = () => {
     const [query, setQuery] = useState<any>({
@@ -73,6 +74,7 @@ const HomePageUser = () => {
                     defaultCurrentPage={query.page}
                 />
             </div>
+            <Footer/>
         </div>
     );
 };
