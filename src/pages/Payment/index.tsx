@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Modal, Row, Select, Table } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Select, Table, Typography } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import iconBack from "../../assets/images/arrowBack.svg";
@@ -11,6 +11,11 @@ import { useCart } from "../../Context/CartContext";
 import { useCreateOrderMutation } from "../../redux/queries/user/user.order";
 import { formatDateString, locale } from "../../utils/common";
 import { TypeOption } from "./TypeOption";
+import {
+    useGetCityQuery,
+    useLazyGetDistrictQuery,
+    useLazyGetWardQuery,
+} from "../../redux/queries/admin/admin.location";
 
 const Payment = () => {
     const [form] = Form.useForm();
@@ -19,6 +24,11 @@ const Payment = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [pendingValues, setPendingValues] = useState<any>(null);
+    const [dateShip, setDateShip] = useState(new Date());
+    const [totalMoney, setTotalMoney] = useState(0);
+    const [productMoney, setProductMoney] = useState(0);
+    const [idCity, setIdCity] = useState("");
+    const [idDistrict, setIdDistrict] = useState("");
 
     const navigation = useNavigate();
 
@@ -26,13 +36,10 @@ const Payment = () => {
 
     const { totalSelectedItem } = useContext(DataContext);
 
-    console.log(totalSelectedItem);
-
-    const [dateShip, setDateShip] = useState(new Date());
-    const [totalMoney, setTotalMoney] = useState(0);
-    const [productMoney, setProductMoney] = useState(0);
-
     const [createOrder] = useCreateOrderMutation();
+    const { data: list_city, isFetching, isLoading } = useGetCityQuery();
+    const [getListDistrict, { data: list_district }] = useLazyGetDistrictQuery();
+    const [getListWard, { data: list_ward }] = useLazyGetWardQuery();
 
     const columns = [
         {
@@ -123,6 +130,18 @@ const Payment = () => {
     }, [totalSelectedItem]);
 
     useEffect(() => {
+        if (idCity) {
+            getListDistrict({ idCity: idCity });
+        }
+    }, [idCity]);
+
+    useEffect(() => {
+        if (idDistrict) {
+            getListWard({ idDistrict: idDistrict });
+        }
+    }, [idDistrict]);
+
+    useEffect(() => {
         let timer: NodeJS.Timeout;
 
         if (openModal && pendingValues) {
@@ -152,7 +171,12 @@ const Payment = () => {
                                 src={iconBack}
                                 alt=""
                             />
-                            Trở lại
+                            <Typography.Title
+                                level={4}
+                                className="my-0"
+                            >
+                                Trở lại
+                            </Typography.Title>
                         </Link>
                     </div>
                     <div className="container text-start">
@@ -231,11 +255,36 @@ const Payment = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input
+                                                            {/* <Input
                                                                 type="text"
                                                                 className="form-floating no-icon"
                                                                 placeholder="Nhập tên sản phẩm"
-                                                            />
+                                                            /> */}
+                                                            <Select
+                                                                className="form-control"
+                                                                style={{ height: "48px" }}
+                                                                bordered={false}
+                                                                showSearch
+                                                                filterOption={(input, option) =>
+                                                                    (option?.children as any)
+                                                                        ?.toLowerCase()
+                                                                        .indexOf(input.toLowerCase()) >= 0
+                                                                }
+                                                                onChange={(idCity: string) => setIdCity(idCity)}
+                                                                placeholder="Chọn tỉnh/thành phố"
+                                                            >
+                                                                {list_city &&
+                                                                    list_city.map((o: any) => {
+                                                                        return (
+                                                                            <Select.Option
+                                                                                key={o.id}
+                                                                                value={o.id}
+                                                                            >
+                                                                                {o.name}
+                                                                            </Select.Option>
+                                                                        );
+                                                                    })}
+                                                            </Select>
                                                         </Form.Item>
                                                         <label htmlFor="">Tỉnh/Thành phố</label>
                                                     </div>
@@ -259,11 +308,33 @@ const Payment = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input
-                                                                type="text"
-                                                                className="form-floating no-icon"
-                                                                placeholder="Nhập tên sản phẩm"
-                                                            />
+                                                            <Select
+                                                                className="form-control"
+                                                                style={{ height: "48px" }}
+                                                                bordered={false}
+                                                                showSearch
+                                                                filterOption={(input, option) =>
+                                                                    (option?.children as any)
+                                                                        ?.toLowerCase()
+                                                                        .indexOf(input.toLowerCase()) >= 0
+                                                                }
+                                                                onChange={(idDistrict: string) =>
+                                                                    setIdDistrict(idDistrict)
+                                                                }
+                                                                placeholder="Chọn quận/huyện"
+                                                            >
+                                                                {list_district &&
+                                                                    list_district.map((o: any) => {
+                                                                        return (
+                                                                            <Select.Option
+                                                                                key={o.id}
+                                                                                value={o.id}
+                                                                            >
+                                                                                {o.name}
+                                                                            </Select.Option>
+                                                                        );
+                                                                    })}
+                                                            </Select>
                                                         </Form.Item>
                                                         <label htmlFor="">Quận/Huyện</label>
                                                     </div>
@@ -282,11 +353,30 @@ const Payment = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input
-                                                                type="text"
-                                                                className="form-floating no-icon"
-                                                                placeholder="Nhập tên sản phẩm"
-                                                            />
+                                                            <Select
+                                                                className="form-control"
+                                                                style={{ height: "48px" }}
+                                                                bordered={false}
+                                                                showSearch
+                                                                filterOption={(input, option) =>
+                                                                    (option?.children as any)
+                                                                        ?.toLowerCase()
+                                                                        .indexOf(input.toLowerCase()) >= 0
+                                                                }
+                                                                placeholder="Chọn xã/phường"
+                                                            >
+                                                                {list_ward &&
+                                                                    list_ward.map((o: any) => {
+                                                                        return (
+                                                                            <Select.Option
+                                                                                key={o.id}
+                                                                                value={o.id}
+                                                                            >
+                                                                                {o.name}
+                                                                            </Select.Option>
+                                                                        );
+                                                                    })}
+                                                            </Select>
                                                         </Form.Item>
                                                         <label htmlFor="">Xã/Phường</label>
                                                     </div>
@@ -335,13 +425,13 @@ const Payment = () => {
                                     locale={locale}
                                 />
                             </div>
-                            <div className="py-3 px-4 border border-2  form-group rounded-4">
+                            <div className="py-3 px-4 border border-2 fs-5 fw-medium form-group rounded-4">
                                 <Row gutter={20}>
                                     <Col span={3}>Đơn vị vận chuyển :</Col>
                                     <Col span={18}>
                                         <div className="">
                                             Nhanh
-                                            <p>Dự kiến nhận hàng : {formatDateString(dateShip.toString())}</p>
+                                            <div>Dự kiến nhận hàng : {formatDateString(dateShip.toString())}</div>
                                         </div>
                                     </Col>
                                     <Col span={3}>
@@ -415,6 +505,7 @@ const Payment = () => {
                                                 <Button
                                                     type="primary"
                                                     htmlType="submit"
+                                                    className="color-btn-pay fw-semibold text-black"
                                                 >
                                                     Thanh toán
                                                 </Button>

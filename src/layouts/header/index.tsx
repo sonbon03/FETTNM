@@ -1,22 +1,23 @@
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Badge, Button, Dropdown, Menu, MenuProps, Space, Table, TableColumnsType } from "antd";
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import iconCart from "../../assets/images/iconCart.svg";
 import iconClose from "../../assets/images/iconClose.svg";
 import iconUser from "../../assets/images/iconUser.svg";
 import logo from "../../assets/images/logo.png";
 import { useToast } from "../../components/toast/ToastProvider";
 import { useCart } from "../../Context/CartContext";
+import { DataContext } from "../../Context/InfoProductContext";
 import { useCheckAdmin } from "../../hook/useCheckAdmin";
 import { useGetListProductQuery, useGetTypeProductQuery } from "../../redux/queries/admin/admin.product";
-import { locale } from "../../utils/common";
-import { DataContext } from "../../Context/InfoProductContext";
 
 interface HeaderProp {}
 
 const Header = (props: HeaderProp) => {
     const { cartData, setCartData } = useCart();
+
+    const location = useLocation();
 
     const { setTotalSelectedItems } = useContext(DataContext);
 
@@ -122,7 +123,7 @@ const Header = (props: HeaderProp) => {
             title: "Giá",
             dataIndex: "price",
             render: (price: any) => {
-                return <div className="">{price.toLocaleString("vi-VN")}</div>;
+                return <div className="">{price?.toLocaleString("vi-VN")}</div>;
             },
         },
         {
@@ -206,11 +207,15 @@ const Header = (props: HeaderProp) => {
         },
     ];
 
+    const tableLocale = {
+        emptyText: "Bạn chưa có sản phẩm nào",
+    };
+
     const itemsProduct: MenuProps["items"] = [
         {
             label: (
                 <div
-                    className=""
+                    style={{ maxHeight: "500px", overflow: "auto" }}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Table
@@ -219,7 +224,7 @@ const Header = (props: HeaderProp) => {
                         rowKey={"idProduct"}
                         dataSource={cartData as any}
                         pagination={false}
-                        locale={locale}
+                        locale={tableLocale}
                     />
                 </div>
             ),
@@ -257,6 +262,23 @@ const Header = (props: HeaderProp) => {
     const menuUser = <Menu items={itemsUser} />;
     const menuCart = <Menu items={itemsProduct} />;
 
+    const checkActiveSubNavItem = (path: string, className: string) => {
+        return location.pathname === path ? `${className} activeLink` : className;
+    };
+
+    const customSubNavItem = (path: string, name: string, permission?: string) => {
+        return !permission ? (
+            <li className={checkActiveSubNavItem(path, "nav-item")}>
+                <Link
+                    className="nav-link text-black"
+                    to={path}
+                >
+                    {name}
+                </Link>
+            </li>
+        ) : null;
+    };
+
     return (
         <header>
             <div className="containe">
@@ -269,7 +291,7 @@ const Header = (props: HeaderProp) => {
                             <img
                                 src={logo}
                                 alt="logo"
-                                className="img-fluid w-50"
+                                className="img-fluid w-50 ms-0"
                             />
                         </Link>
                         {/* <button
@@ -287,8 +309,8 @@ const Header = (props: HeaderProp) => {
                             className="collapse navbar-collapse "
                             id="navbarSupportedContent"
                         >
-                            <ul className="navbar-nav m-auto mb-2 mb-lg-0 gap-5 text-black">
-                                <li className="nav-item">
+                            <ul className="navbar-nav m-auto mb-2 mb-lg-0 gap-5 text-black fs-6">
+                                {/* <li className="nav-item">
                                     <Link
                                         className="nav-link active "
                                         aria-current="page"
@@ -296,10 +318,13 @@ const Header = (props: HeaderProp) => {
                                     >
                                         Trang chủ
                                     </Link>
-                                </li>
+                                </li> */}
+
+                                {customSubNavItem(isAdmin ? "/admin" : "/", "Trang chủ")}
+
                                 <li className="nav-item">
                                     <Link
-                                        className="nav-link  "
+                                        className="nav-link text-black"
                                         to="#"
                                     >
                                         Giới thiệu
@@ -320,7 +345,7 @@ const Header = (props: HeaderProp) => {
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className="nav-link"
+                                        className="nav-link text-black"
                                         to={""}
                                     >
                                         Tin tức

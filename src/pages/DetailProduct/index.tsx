@@ -8,14 +8,14 @@ import iconEdit from "../../assets/images/iconEdit.svg";
 import iconUser from "../../assets/images/iconUser.svg";
 import imgDefault from "../../assets/images/pngegg2.png";
 import FormComment from "../../components/FormComment";
+import ListSameProduct from "../../components/ListSameProduct";
 import { useToast } from "../../components/toast/ToastProvider";
 import { TOAST_CREATE_ERROR, TOAST_CREATE_SUCCESS, TOAST_DELETE_ERROR, TOAST_DELETE_SUCCESS } from "../../consts/index";
 import { useCart } from "../../Context/CartContext";
+import { DataContext } from "../../Context/InfoProductContext";
 import { useGetDetailProductQuery } from "../../redux/queries/admin/admin.product";
 import { useDeleteCommentMutation, useGetListCommentQuery } from "../../redux/queries/user/user.comment";
 import { formatDateString } from "../../utils/common";
-import { DataContext } from "../../Context/InfoProductContext";
-import ListSameProduct from "../../components/ListSameProduct";
 
 const DetailProduct = () => {
     const params = useParams();
@@ -49,10 +49,12 @@ const DetailProduct = () => {
         if (params.id) {
             const dataCart = {
                 idAccount: "d4aa9ee2-19ae-11ef-a5b7-acde48001122",
-                idCart: "d4aaa36a-19ae-11ef-a5b7-acde48001122",
+                idCart: "c905d9f0-31fd-11ef-8eb7-acde48001122",
                 idProduct: params.id,
                 name: value.tensanpham,
+                price: value.giaban,
                 quantity: quanility,
+                image: value.anhsanpham,
             };
             let cart: any[] = JSON.parse(sessionStorage.getItem("cart") || "[]");
             let check = cart.find((item: any) => item.idProduct === value.id);
@@ -82,7 +84,7 @@ const DetailProduct = () => {
         if (params.id) {
             const data = {
                 idProduct: params.id,
-                idCart: "d4aaa36a-19ae-11ef-a5b7-acde48001122",
+                idCart: "c905d9f0-31fd-11ef-8eb7-acde48001122",
                 name: value.tensanpham,
                 price: value.giaban,
                 quantity: quanility,
@@ -102,10 +104,10 @@ const DetailProduct = () => {
         try {
             const result = await deleteComment({ id: id });
             if ("error" in result) {
-                TOAST_DELETE_ERROR.message = "Xóa bình luận thất bại!";
+                TOAST_DELETE_ERROR.message = "Xóa đánh giá thất bại!";
                 showToast({ ...TOAST_DELETE_ERROR });
             } else {
-                TOAST_DELETE_SUCCESS.message = "Xóa bình luận thành công!";
+                TOAST_DELETE_SUCCESS.message = "Xóa đánh giá thành công!";
                 showToast({ ...TOAST_DELETE_SUCCESS });
             }
         } catch (error) {}
@@ -119,16 +121,17 @@ const DetailProduct = () => {
             <section id="content-main">
                 <div className="body-component">
                     <div className="text-start">
-                        <Row>
-                            <Col span={8}>
+                        <Row gutter={60}>
+                            <Col span={9}>
                                 <img
-                                    src={imgDefault}
+                                    src={process.env.REACT_APP_CDN + (data && data[0].anhsanpham)}
                                     alt=""
                                     width={400}
+                                    className="object-fit-cover rounded-4"
                                 />
                             </Col>
                             <Col
-                                span={16}
+                                span={15}
                                 className="d-flex flex-column justify-content-evenly text-black"
                             >
                                 <div className="d-flex align-items-center w-50">
@@ -201,7 +204,7 @@ const DetailProduct = () => {
                                 </div>
                             </Col>
                         </Row>
-                        <div className="text-black">
+                        <div className="text-black mt-4 mb-3">
                             <Typography.Title
                                 level={4}
                                 className="mb-0 w-50"

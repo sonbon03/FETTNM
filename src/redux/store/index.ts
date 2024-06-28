@@ -10,6 +10,7 @@ import { adminProduct } from "../queries/admin/admin.product";
 import { userCart } from "../queries/user/user.cart";
 import { userComment } from "../queries/user/user.comment";
 import { userOrder } from "../queries/user/user.order";
+import { adminLocation } from "../queries/admin/admin.location";
 
 const rootPersistConfig = {
     key: "root",
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     action: actionReducer,
     //admin
     [adminProduct.reducerPath]: adminProduct.reducer,
+    [adminLocation.reducerPath]: adminLocation.reducer,
     // user
     [userCart.reducerPath]: userCart.reducer,
     [userComment.reducerPath]: userComment.reducer,
@@ -32,6 +34,7 @@ const rootReducer = combineReducers({
 const middlewares = [
     //admin
     adminProduct.middleware,
+    adminLocation.middleware,
     // user
     userCart.middleware,
     userComment.middleware,

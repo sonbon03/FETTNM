@@ -234,8 +234,17 @@ p {
     background-color: #D8C3A5;
 }
 
+.bg-button-back {
+    background-color: rgba(216, 195, 165, 0.51)
+}
+
 .color-title {
-    color: #7C5B05;
+    color: #7C5B05 !important;
+}
+
+.color-btn-backpay {
+    background-color: #703C0D;
+    color: #ffffff;
 }
 
 .color-bg {
@@ -254,7 +263,7 @@ p {
 }
 
 .color-red {
-    color: #FF0000;
+    color: #FF0000 !important;
 }
 
 .color-form-comment {
@@ -268,6 +277,42 @@ p {
 
 .color-btn-pay {
     background: linear-gradient(90deg, #D8C3A5 50%, #D8C3A5 50%);
+}
+
+.color-btn-send-email {
+    background: linear-gradient(180deg, #D8C3A5 -20%, #FFFFFF 120%) !important;
+    font-weight: 700;
+}
+
+
+.activeLink a {
+    color: #703C0D !important;
+    font-family: var(--interSemiBold);
+}
+
+.footer {
+    background-image: url('../../assets/images/footer.svg');
+    background-size: cover;
+    background-position: center;
+    color: #000;
+    padding: 20px 0;
+
+}
+
+.btn-banner {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.btn-prev {
+    left: 20px;
+}
+
+
+.btn-next {
+    right: 20px;
 }
 
 /* end */
@@ -309,6 +354,7 @@ p {
     background-color: var(--greenBg) !important;
     border: 1px solid var(--greenBorder) !important;
 }
+
 
 
 

@@ -421,6 +421,21 @@ interface IComment {
     idProduct: string;
 }
 
+interface ICity {
+    id: string;
+    name: string;
+}
+interface IDistrict {
+    id: string;
+    idCity: string;
+    name: string;
+}
+
+interface IWard {
+    id: string;
+    idDistrict: string;
+    name: string;
+}
 // interface IApplyPayment {
 //     id?: string;
 //     applyProcessId: string;

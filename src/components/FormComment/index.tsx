@@ -30,19 +30,19 @@ const FormComment = (props: Props) => {
             if (!data) {
                 const result = await createComment({ ...dataComment });
                 if ("error" in result) {
-                    TOAST_CREATE_ERROR.message = "Tạo bình luận thất bại!";
+                    TOAST_CREATE_ERROR.message = "Thêm đánh giá thất bại!";
                     showToast({ ...TOAST_CREATE_ERROR });
                 } else {
-                    TOAST_CREATE_SUCCESS.message = "Tạo bình luận thành công!";
+                    TOAST_CREATE_SUCCESS.message = "Thêm đánh giá thành công!";
                     showToast({ ...TOAST_CREATE_SUCCESS });
                 }
             } else {
                 const result = await updateComment({ id: data.id, ...dataComment });
                 if ("error" in result) {
-                    TOAST_UPDATE_ERROR.message = "Sửa bình luận thất bại!";
+                    TOAST_UPDATE_ERROR.message = "Sửa đánh giá thất bại!";
                     showToast({ ...TOAST_UPDATE_ERROR });
                 } else {
-                    TOAST_UPDATE_SUCCESS.message = "Sửa bình luận thành công!";
+                    TOAST_UPDATE_SUCCESS.message = "Sửa đánh giá thành công!";
                     showToast({ ...TOAST_UPDATE_SUCCESS });
                 }
                 props.setOpen && props.setOpen();
@@ -109,7 +109,7 @@ const FormComment = (props: Props) => {
                                 htmlType="submit"
                                 className="px-5 rounded-4 color-linear-button"
                             >
-                                Gửi
+                                {data ? "Sửa" : "Gửi"}
                             </Button>
                         </div>
                     </Col>

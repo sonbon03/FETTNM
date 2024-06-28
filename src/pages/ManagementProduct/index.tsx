@@ -42,12 +42,15 @@ const ManagementProduct = () => {
             fixed: "left",
         },
         {
-            title: "Gia ban",
+            title: "Giá bán",
             dataIndex: "giaban",
             fixed: "left",
+            render: (price: number) => {
+                return <div className="">{price.toLocaleString("vi-VN")} đ</div>;
+            },
         },
         {
-            title: "Anh san pham",
+            title: "Ảnh sản phẩm",
             dataIndex: "anhsanpham",
             fixed: "left",
             render: (img: any) => {
@@ -63,7 +66,7 @@ const ManagementProduct = () => {
             },
         },
         {
-            title: "Chuc nang",
+            title: "Chức năng",
             fixed: "right",
             render: (record: any) => {
                 return (
@@ -104,6 +107,7 @@ const ManagementProduct = () => {
         const result = await deleteProduct({
             id: id,
         });
+
         if ("error" in result) {
             TOAST_DELETE_ERROR.message = "Xóa sản phẩm thất bại!";
             showToast(TOAST_DELETE_ERROR);
@@ -130,7 +134,10 @@ const ManagementProduct = () => {
                                         />
                                         Xóa
                                     </Button>
-                                    <Button onClick={() => navigate("/admin/form-management-product/")}>
+                                    <Button
+                                        onClick={() => navigate("/admin/form-management-product/")}
+                                        className="color-linear"
+                                    >
                                         Thêm mới
                                     </Button>
                                 </div>

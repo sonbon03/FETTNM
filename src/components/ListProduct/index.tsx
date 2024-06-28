@@ -1,4 +1,4 @@
-import { Button, Card, Spin } from "antd";
+import { Button, Card, Spin, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import iconBasket from "../../assets/images/iconBasket.svg";
@@ -42,7 +42,7 @@ const ListProduct = (props: ListProductProp) => {
     const handleAddCart = (value: any) => {
         const dataCart = {
             idAccount: "d4aa9ee2-19ae-11ef-a5b7-acde48001122",
-            idCart: "d4aaa36a-19ae-11ef-a5b7-acde48001122",
+            idCart: "c905d9f0-31fd-11ef-8eb7-acde48001122",
             idProduct: value.id,
             name: value.tensanpham,
             quantity: 1,
@@ -77,9 +77,16 @@ const ListProduct = (props: ListProductProp) => {
 
     return (
         <div className="container mt-5">
+            <Typography.Title
+                className="text-start"
+                level={3}
+            >
+                Sản phẩm
+            </Typography.Title>
             {data ? (
                 <ul className="d-flex flex-wrap list-product">
                     {data?.map((item: any) => {
+                        const link = process.env.REACT_APP_CDN + item.anhsanpham;
                         return (
                             <li>
                                 <WrapCard
@@ -88,7 +95,9 @@ const ListProduct = (props: ListProductProp) => {
                                     cover={
                                         <img
                                             alt="img-prouduct"
-                                            src={images1}
+                                            src={link}
+                                            height={300}
+                                            className="object-fit-cover rounded-4"
                                         />
                                     }
                                 >

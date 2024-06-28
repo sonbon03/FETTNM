@@ -11,12 +11,13 @@ interface Props {
 
 const UploadThumbnail = (props: Props) => {
     const { thumbnail, setThumbnail } = props;
+
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const { showToast } = useToast();
 
     const uploadProps: any = {
         name: "files",
-        action: `${process.env.REACT_APP_HOST}/thumbnail/add`,
+        action: `${process.env.REACT_APP_HOST}/api/thumbnail/add`,
         method: "POST",
         maxCount: 1,
         accept: "image/*",
@@ -71,7 +72,12 @@ const UploadThumbnail = (props: Props) => {
                     </div>
                     <Upload.Dragger {...uploadProps}>
                         <div className="upload-btn-wrapper">
-                            <button className="btn">Tải ảnh sản phẩm</button>
+                            <button
+                                className="btn"
+                                type="button"
+                            >
+                                Tải ảnh sản phẩm
+                            </button>
                         </div>
                     </Upload.Dragger>
                 </div>

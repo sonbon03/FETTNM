@@ -8,6 +8,7 @@ import ListProduct from "../../components/ListProduct";
 import ListTypeProduct from "../../components/ListTypeProduct";
 import { Pagination } from "../../components/pagination";
 import { useGetListProductPaginateQuery } from "../../redux/queries/admin/admin.product";
+import Banner from "./components/Banner";
 const HomePageUser = () => {
     const [query, setQuery] = useState<any>({
         page: 1,
@@ -22,11 +23,7 @@ const HomePageUser = () => {
             id="main"
         >
             <div className="banner">
-                <img
-                    src={banner}
-                    className="img-fluid"
-                    alt=""
-                />
+                <Banner />
             </div>
             <div className="container">
                 <div className="d-flex justify-content-evenly mt-4 mb-5">

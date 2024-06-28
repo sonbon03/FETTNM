@@ -90,7 +90,7 @@ const ListSameProduct = (props: ListSameProductProps) => {
     const handleAddCart = (value: any) => {
         const dataCart = {
             idAccount: "d4aa9ee2-19ae-11ef-a5b7-acde48001122",
-            idCart: "d4aaa36a-19ae-11ef-a5b7-acde48001122",
+            idCart: "c905d9f0-31fd-11ef-8eb7-acde48001122",
             idProduct: value.id,
             name: value.tensanpham,
             quantity: 1,
@@ -149,7 +149,7 @@ const ListSameProduct = (props: ListSameProductProps) => {
                     className="rounded-2xl overflow-hidden"
                 >
                     {data?.items.map((item: any) => {
-                        const link = process.env.REACT_APP_CDN + item.image;
+                        const link = process.env.REACT_APP_CDN + item.anhsanpham;
                         return (
                             <WrapCard
                                 className="cursor-pointer img-product bg-transparent border-0"
@@ -158,6 +158,8 @@ const ListSameProduct = (props: ListSameProductProps) => {
                                     <img
                                         alt="img-prouduct"
                                         src={link}
+                                        height={300}
+                                        className="object-fit-cover rounded-4"
                                     />
                                 }
                             >

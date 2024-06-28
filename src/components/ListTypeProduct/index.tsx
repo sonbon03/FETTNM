@@ -25,6 +25,13 @@ const ListTypeProduct = () => {
         }
     `;
 
+    const WrapCardMeta = styled(Card.Meta)`
+        .ant-card-meta-title {
+            font-size: 26px;
+            font-weight: 700;
+        }
+    `;
+
     const WrapCard = styled(Card)`
         .ant-card-body {
             position: absolute;
@@ -86,8 +93,7 @@ const ListTypeProduct = () => {
                                     />
                                 }
                             >
-                                <Card.Meta
-                                    className=""
+                                <WrapCardMeta
                                     title={item.tenloaisanpham}
                                     description={
                                         <Link
@@ -99,7 +105,7 @@ const ListTypeProduct = () => {
                                         >
                                             <Typography.Title
                                                 level={3}
-                                                className="text-white"
+                                                className="text-white fw-medium"
                                             >
                                                 Xem thêm
                                             </Typography.Title>

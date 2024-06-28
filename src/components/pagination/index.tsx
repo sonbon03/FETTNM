@@ -1,6 +1,5 @@
-import { randomNum } from "../../utils/common";
-import { Button, Input, InputNumber, Space } from "antd";
 import React, { useEffect, useState } from "react";
+import { randomNum } from "../../utils/common";
 
 interface PaginationProps {
     total: number;
@@ -128,10 +127,10 @@ export const Pagination: React.FC<PaginationProps> = ({
     };
 
     const listSizeDefault = [10, 20, 50, 100];
-    const defaultSize = default_size ?? 10;
+    const defaultSize = default_size ?? 8;
 
     return total === 0 || total <= defaultSize ? null : (
-        <div className="d-flex justify-content-between group-sub-action">
+        <div className="d-flex justify-content-between group-sub-action mt-2">
             <div className="">
                 {showSize && (
                     <div className="show-entries">

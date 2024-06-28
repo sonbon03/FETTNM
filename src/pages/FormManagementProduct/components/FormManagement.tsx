@@ -20,6 +20,7 @@ const FormManagement = (props: Props) => {
     const [form] = Form.useForm();
 
     const [thumbnail, setThumbnail] = useState();
+
     const navigation = useNavigate();
 
     const { data: list_typeProduct } = useGetTypeProductQuery();
@@ -53,6 +54,16 @@ const FormManagement = (props: Props) => {
         }
     };
     const onFinish = (values: any) => {
+        if (!thumbnail) {
+            form.setFields([
+                {
+                    name: "thumbnail",
+                    errors: ["Vui lòng tải lên ảnh sản phẩm!"],
+                },
+            ]);
+            return;
+        }
+
         if (data && data.length > 0) {
             handleUpdate(values);
         } else {
@@ -93,11 +104,29 @@ const FormManagement = (props: Props) => {
                         <Col span={12}>
                             <div className="form-group">
                                 <div className="form-floating">
-                                    <UploadThumbnail
-                                        thumbnail={thumbnail}
-                                        setThumbnail={(data: any) => setThumbnail(data)}
-                                    />
-                                    <label>Ảnh sản phẩm</label>
+                                    <Form.Item
+                                        name="thumbnail"
+                                        validateTrigger={["onChange", "onBlur"]}
+                                        rules={[
+                                            {
+                                                validator: (_, value) => {
+                                                    if (thumbnail) {
+                                                        return Promise.resolve();
+                                                    } else {
+                                                        return Promise.reject(new Error("Trường thông tin bắt buộc"));
+                                                    }
+                                                },
+                                            },
+                                        ]}
+                                    >
+                                        <div className="form-floating">
+                                            <UploadThumbnail
+                                                thumbnail={thumbnail}
+                                                setThumbnail={(data: any) => setThumbnail(data)}
+                                            />
+                                            <label>Ảnh sản phẩm</label>
+                                        </div>
+                                    </Form.Item>
                                 </div>
                             </div>
                         </Col>
@@ -110,7 +139,7 @@ const FormManagement = (props: Props) => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: "Thông tin bắt buộc",
+                                                message: "Trường thông tin bắt buộc",
                                             },
                                         ]}
                                     >
@@ -131,7 +160,7 @@ const FormManagement = (props: Props) => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: "Thông tin bắt buộc",
+                                                message: "Trường thông tin bắt buộc",
                                             },
                                         ]}
                                     >
@@ -154,7 +183,7 @@ const FormManagement = (props: Props) => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: "Thông tin bắt buộc",
+                                                message: "Trường thông tin bắt buộc",
                                             },
                                         ]}
                                     >
@@ -177,18 +206,19 @@ const FormManagement = (props: Props) => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: "Thông tin bắt buộc",
+                                                message: "Trường thông tin bắt buộc",
                                             },
                                         ]}
                                     >
                                         <Select
-                                            className="form-control form-floating"
+                                            className="form-control"
                                             bordered={false}
                                             showSearch
                                             filterOption={(input, option) =>
                                                 (option?.children as any)?.toLowerCase().indexOf(input.toLowerCase()) >=
                                                 0
                                             }
+                                            placeholder="Chọn loại sản phẩm"
                                         >
                                             {list_typeProduct &&
                                                 list_typeProduct.map((o: any) => {
@@ -216,12 +246,13 @@ const FormManagement = (props: Props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: "Thông tin bắt buộc",
+                                        message: "Trường thông tin bắt buộc",
                                     },
                                 ]}
                             >
                                 <Input.TextArea
                                     placeholder="Nhập mô tả sản phẩm"
+                                    className="pt-2"
                                     autoSize={{ minRows: 5, maxRows: 10 }}
                                 />
                             </Form.Item>
@@ -231,7 +262,7 @@ const FormManagement = (props: Props) => {
                     <div className="form-group">
                         <div className="form-floating">
                             <Button
-                                className="w-100"
+                                className="w-100 color-linear text-black"
                                 type="primary"
                                 htmlType="submit"
                             >

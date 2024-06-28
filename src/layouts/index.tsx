@@ -7,7 +7,7 @@ const Layout: React.FunctionComponent = () => {
     return (
         <div className="container-fluid padding0">
             <Header />
-            <main>
+            <main id="main">
                 <Outlet />
             </main>
             <Footer />

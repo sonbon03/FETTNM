@@ -1,4 +1,4 @@
-import { Button, Col, Row, Spin } from "antd";
+import { Button, Col, Row, Spin, Typography } from "antd";
 import { useGetListOrderQuery } from "../../redux/queries/user/user.order";
 import { Link } from "react-router-dom";
 
@@ -10,18 +10,20 @@ const HistoryPay = () => {
             <main>
                 <section id="payment-main">
                     <div className="container text-start">
-                        <h6>Lịch sử giao dịch</h6>
-                        <ul className="d-grid gap-3 mt-4">
+                        <h5>Lịch sử giao dịch</h5>
+                        <ul className="d-grid gap-5 mt-4">
                             {!isLoading ? (
                                 data?.map((item: any, index: number) => {
                                     return (
                                         <li>
-                                            <div className=" border rounded">
-                                                <div className="px-5 pt-3 pb-2">
+                                            <div className=" border rounded color-bg">
+                                                <div className="px-5 py-4">
                                                     <Row>
                                                         <Col span={12}>
                                                             <Link to={`/detail-history-pay/${item.id}`}>
-                                                                Đơn hàng {index + 1}
+                                                                <Typography.Title level={5}>
+                                                                    Đơn hàng {index + 1}
+                                                                </Typography.Title>
                                                             </Link>
                                                             <div className="d-flex gap-2">
                                                                 {item?.sanpham?.map((product: any, index: number) => {
@@ -40,18 +42,19 @@ const HistoryPay = () => {
                                                             span={12}
                                                             className="text-end"
                                                         >
-                                                            <div className="">Hoàn thành</div>
+                                                            <div className="text-green fw-bolder mb-2">Hoàn thành</div>
                                                             <div className="">
                                                                 {item?.thanhtien.toLocaleString("vi-VN")}
                                                             </div>
                                                         </Col>
                                                     </Row>
                                                 </div>
-                                                <hr />
-                                                <div className="px-5 pb-2">
+                                                <div className="px-5 py-2 bg-white border-top">
                                                     <div className="d-flex gap-4 justify-content-end mt-2">
-                                                        <Button>Mua lại</Button>
-                                                        <Button>Liên hệ shop</Button>
+                                                        <Button className="rounded-3 color-btn-backpay ">
+                                                            Mua lại
+                                                        </Button>
+                                                        <Button className="rounded-3">Liên hệ shop</Button>
                                                     </div>
                                                 </div>
                                             </div>
