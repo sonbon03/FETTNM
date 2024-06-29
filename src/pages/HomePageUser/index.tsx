@@ -1,6 +1,5 @@
 import { Typography } from "antd";
 import { memo, useState } from "react";
-import banner from "../../assets/images/banner01.webp";
 import chatluong from "../../assets/images/chatluong.svg";
 import dadang from "../../assets/images/dadang.svg";
 import nhanhchong from "../../assets/images/nhanhchong.svg";
@@ -26,32 +25,32 @@ const HomePageUser = () => {
                 <Banner />
             </div>
             <div className="container">
-                <div className="d-flex justify-content-evenly mt-4 mb-5">
+                <div className="d-flex justify-content-evenly my-5">
                     <div className="d-flex flex-column gap-3 justify-content-between">
-                        <div className="border border-4 rounded-circle">
+                        <div className="border border-4 rounded-circle img-attribute">
                             <img
                                 src={chatluong}
-                                className="img-fluid py-4"
+                                className="img-fluid"
                                 alt=""
                             />
                         </div>
                         <Typography.Title level={3}>Cam kết chất lượng</Typography.Title>
                     </div>
                     <div className="d-flex flex-column gap-3 justify-content-between">
-                        <div className="border border-4 rounded-circle">
+                        <div className="border border-4 rounded-circle img-attribute">
                             <img
                                 src={dadang}
-                                className="img-fluid py-4"
+                                className="img-fluid"
                                 alt=""
                             />
                         </div>
                         <Typography.Title level={3}>Thanh toán đa dạng</Typography.Title>
                     </div>
                     <div className="d-flex flex-column gap-3 justify-content-between">
-                        <div className="border border-4 rounded-circle">
+                        <div className="border border-4 rounded-circle img-attribute">
                             <img
                                 src={nhanhchong}
-                                className="img-fluid py-4"
+                                className="img-fluid"
                                 alt=""
                             />
                         </div>

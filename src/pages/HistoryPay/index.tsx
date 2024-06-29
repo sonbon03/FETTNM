@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const HistoryPay = () => {
     const { data, isFetching, isLoading } = useGetListOrderQuery({ idAccount: "d4aa9ee2-19ae-11ef-a5b7-acde48001122" });
+    console.log(data);
     return (
         <div className="container-fluid padding0">
             <span className="screen-darken"></span>

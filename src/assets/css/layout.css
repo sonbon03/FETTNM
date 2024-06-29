@@ -315,6 +315,10 @@ p {
     right: 20px;
 }
 
+.img-attribute img {
+    padding: 28px 0;
+}
+
 /* end */
 
 .text-green {

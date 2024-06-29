@@ -92,8 +92,18 @@ const Payment = () => {
     };
 
     const onFinish = async (values: any) => {
+        const city = list_city?.find((item) => item.id === values.city);
+        const district = list_district?.find((item) => item.id === values.district);
+        const ward = list_ward?.find((item) => item.id === values.ward);
+        const data = {
+            ...values,
+            city: city?.name,
+            district: district?.name,
+            ward: ward?.name,
+        };
+
         if (values.typePay === 1) {
-            handleAdd(values);
+            handleAdd(data);
             setTimeout(() => {
                 navigation("/thankpage");
             }, 0);
